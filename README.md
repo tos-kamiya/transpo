@@ -14,6 +14,13 @@ By installing the package `transpo-dir` with pip, an executable `transpo` will b
 pip install transpo-dir
 ```
 
+
+If you get the error `ModuleNotFoundError: No module named 'docopt'` when running `transpo`, install the package docopt-ng or docopt.
+
+```sh
+pip install docopt-ng
+```
+
 ## Usage
 
 ```
