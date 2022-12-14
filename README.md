@@ -2,16 +2,16 @@
 
 `transpo` is a tool to "transpose" directory structure.
 
-Have you ever needed to create a directory that looks like a two-dimensional spreadsheet?
-For example, let's say you have product sales data stored in a directory where the first level is the product name and the second level is the month.
-Now you want to convert this to a directory structure where the first level is the month and the second level is the product name. The tool `transpo` supports such a change of directory structure.
+Have you ever needed to create a directory structure that looks like a two-dimensional spreadsheet? For example, let's say you have product sales data stored in a directory where the first level is the product name and the second level is the month.
+Now you want to convert this to a directory structure where the first level is the month and the second level is the product name. 
+The tool `transpo` supports such a change of directory structure.
 
 ## Installation
 
 By installing the package `transpo-dir` with pip, an executable `transpo` will be installed on your system.
 
 ```sh
-pip install git+https://github.com/tos-kamiya/transpo-dir
+pip install transpo-dir
 ```
 
 ## Usage
