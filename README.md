@@ -14,7 +14,7 @@ pip install git+https://github.com/tos-kamiya/transpo
 
 ## Usage
 
-```sh
+```
 transpo [options] <src> -d DEST
 ```
 
@@ -25,9 +25,9 @@ transpo [options] <src> -d DEST
 -i INDICES, --index-order=INDICES     The order of indices for transpose [default: 21].
 ```
 
-### Example
+### Walkthrough
 
-```
+```sh
 $ cd test-data/test-depth-2
 
 $ tree
@@ -47,7 +47,7 @@ $ tree
 
 $ transpo . -d hoge
 #!/bin/bash
-set -e
+set -ex
 
 mkdir hoge
 mkdir -p hoge/1
@@ -56,4 +56,32 @@ mkdir -p hoge/2
 mv ./a/2 hoge/2/a
 mv ./b/1 hoge/1/b
 mv ./b/2 hoge/2/b
+rm -rf ./a
+rm -rf ./b
+
+$ transpo . -d hoge | bash -
++ mkdir hoge
++ mkdir -p hoge/1
++ mv ./a/1 hoge/1/a
++ mkdir -p hoge/2
++ mv ./a/2 hoge/2/a
++ mv ./b/1 hoge/1/b
++ mv ./b/2 hoge/2/b
++ rm -rf ./a
++ rm -rf ./b
+
+$ tree
+.
+└── hoge
+    ├── 1
+    │   ├── a
+    │   │   └── a-1.txt
+    │   └── b
+    │       └── b-1.txt
+    └── 2
+        ├── a
+        │   └── a-2.txt
+        └── b
+            └── b-2.txt
 ```
+

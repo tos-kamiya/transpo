@@ -65,18 +65,27 @@ def main():
     if os.path.exists(dest_dir):
         sys.exit('Error: destination directory exists: %s' % dest_dir)
 
+    # setup as a bash script
     print("#!/bin/bash")
-    print("set -e")
+    print("set -ex")  # stop on any error / show commands being executed
     print()
-    print("mkdir %s" % quote(dest_dir))
-    mkdir_done_set = set()
 
+    # make the destination directory
+    print("mkdir %s" % quote(dest_dir))
+
+    # make and move directories
     len_index_order = len(index_order)
+    mkdir_done_set = set()
+    direct_child_dir_set = set()
+    direct_child_dir_set_having_unmovable_files = set()
     for k, n in fixed_depth_walk(src_dir, len_index_order):
         if k == 'f':
+            if len(n) >= 2:
+                direct_child_dir_set_having_unmovable_files.add(tuple(n[:2]))
             print("# unmovable file: %s" % qj(*n))
             continue  # for k, n
 
+        direct_child_dir_set.add(tuple(n[:2]))
         transposed_dir = [dest_dir] + [n[i] for i in index_order[:-1]]
         t = tuple(transposed_dir)
         if t not in mkdir_done_set:
@@ -85,6 +94,10 @@ def main():
         transposed_n = transposed_dir + [n[index_order[-1]]] + n[len_index_order + 1:]
         print("mv %s %s" % (qj(*n), qj(*transposed_n)))
 
+    # remove original directories
+    for c in sorted(direct_child_dir_set):
+        if c not in direct_child_dir_set_having_unmovable_files:
+            print("rm -rf %s" % qj(*c))
 
 if __name__ == '__main__':
     main()
