@@ -1,4 +1,4 @@
-# transpo
+# transpo-dir
 
 `transpo` is a tool to "transpose" directory structure.
 
@@ -8,8 +8,10 @@ Now you want to convert this to a directory structure where the first level is t
 
 ## Installation
 
+By installing the package `transpo-dir` with pip, an executable `transpo` will be installed on your system.
+
 ```sh
-pip install git+https://github.com/tos-kamiya/transpo
+pip install git+https://github.com/tos-kamiya/transpo-dir
 ```
 
 ## Usage
