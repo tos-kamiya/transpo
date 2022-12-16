@@ -1,3 +1,5 @@
+from typing import Iterator, List, Set, Tuple
+
 import os
 import shlex
 import sys
@@ -5,11 +7,11 @@ import sys
 from docopt import docopt
 
 
-def fixed_depth_walk(top_dir, depth):
+def fixed_depth_walk(top_dir: str, depth: int) -> Iterator[Tuple[str, List[str]]]:
     from os import listdir
     from os.path import join, isdir
 
-    def w_i(top_list, depth_remain):
+    def w_i(top_list: List[str], depth_remain: int) -> Iterator[Tuple[str, List[str]]]:
         assert depth_remain >= 1
 
         top_dir = join(*top_list)
@@ -53,7 +55,7 @@ def main():
     dest_dir = normpath(args['-d'])
 
     try:
-        index_order = [int(v) for v in args['--index-order']]
+        index_order: List[int] = [int(v) for v in args['--index-order']]
     except ValueError:
         sys.exit("Error: invalid string as index order: %s" % repr(args['--index-order']))
     e = [i + 1 for i in range(len(index_order))]
@@ -74,10 +76,10 @@ def main():
     print("mkdir %s" % quote(dest_dir))
 
     # make and move directories
-    len_index_order = len(index_order)
-    mkdir_done_set = set()
-    direct_child_dir_set = set()
-    direct_child_dir_set_having_unmovable_files = set()
+    len_index_order: int = len(index_order)
+    mkdir_done_set: Set[Tuple[str, ...]] = set()
+    direct_child_dir_set: Set[Tuple[str, ...]] = set()
+    direct_child_dir_set_having_unmovable_files: Set[Tuple[str, ...]] = set()
     for k, n in fixed_depth_walk(src_dir, len_index_order):
         if k == 'f':
             if len(n) >= 2:
@@ -98,6 +100,7 @@ def main():
     for c in sorted(direct_child_dir_set):
         if c not in direct_child_dir_set_having_unmovable_files:
             print("rm -rf %s" % qj(*c))
+
 
 if __name__ == '__main__':
     main()
